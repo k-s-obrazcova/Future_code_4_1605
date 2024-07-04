@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import ProductFilterForm
+from django.urls import reverse_lazy
+
+from .forms import ProductFilterForm, SupplierForm
 from .models import *
 
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 # Create your views here.
 
 def list_product(request):
@@ -63,5 +65,32 @@ class ListSupplier(ListView):
     model = Supplier
     template_name = 'shop/supplier/supplier_list.html'
     allow_empty = True
+
+class CreateSupplier(CreateView):
+    model = Supplier
+    extra_context = {
+        'action': 'Создать'
+    }
+    template_name = 'shop/supplier/supplier_form.html'
+    form_class = SupplierForm
+
+class DetailSupplier(DetailView):
+    model = Supplier
+    template_name = 'shop/supplier/supplier_detail.html'
+
+
+class UpdateSupplier(UpdateView):
+    model = Supplier
+    extra_context = {
+        'action': 'Изменить'
+    }
+    template_name = 'shop/supplier/supplier_form.html'
+    form_class = SupplierForm
+
+
+class DeleteSupplier(DeleteView):
+    model = Supplier
+    template_name = 'shop/supplier/supplier_delete.html'
+    success_url = reverse_lazy('product_list_filter')
 
 

@@ -7,4 +7,11 @@ urlpatterns = [
     path('product/one-filter/', get_one_filter, name='product_one_filter'),
     path('product/more-filter/', get_more_filter, name='product_more_filter'),
     path('product/detail/<int:id>/', get_one_product, name='get_one_product'),
+
+    path('supplier/', ListSupplier.as_view(), name='supplier_list'),
+    path('supplier/create/', CreateSupplier.as_view(), name='supplier_create'),
+    path('supplier/update/<int:pk>/', UpdateSupplier.as_view(), name='supplier_update'),
+    path('supplier/delete/<int:pk>/', DeleteSupplier.as_view(), name='supplier_delete'),
+    path('supplier/detail/<int:pk>/', DetailSupplier.as_view(), name='supplier_detail'),
+
 ]
