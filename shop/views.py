@@ -65,6 +65,7 @@ class ListSupplier(ListView):
     model = Supplier
     template_name = 'shop/supplier/supplier_list.html'
     allow_empty = True
+    paginate_by = 1
 
 class CreateSupplier(CreateView):
     model = Supplier
@@ -91,6 +92,6 @@ class UpdateSupplier(UpdateView):
 class DeleteSupplier(DeleteView):
     model = Supplier
     template_name = 'shop/supplier/supplier_delete.html'
-    success_url = reverse_lazy('product_list_filter')
+    success_url = reverse_lazy('supplier_list')
 
 
