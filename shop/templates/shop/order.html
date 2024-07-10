@@ -1,13 +1,48 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Заказ</title>
-    <link rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">
-</head>
-<body>
-<div class="container">
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Заказ</title>#}
+{#    <link rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#<div class="container">#}
+{#    <div class="row">#}
+{#        <div class="col-3">#}
+{#            {{ order.buyer_lastname }} {{ order.buyer_name }} {{ order.buyer_surname }}#}
+{#        </div>#}
+{#        <div class="col-3">#}
+{#            {{ order.delivery_address }} ({{ order.get_delivery_type_display }})#}
+{#        </div>#}
+{#        <div class="col-6">#}
+{#            <b>Сумма заказа: {{ sum_price }}</b>#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="row row-cols-1">#}
+{#        {% for pos_product in object.pos_order_set.all %}#}
+{#            <div class="col">#}
+{#                <a href="{% url 'get_one_product' pos_product.product.pk %}">#}
+{#                    {{ pos_product.product.name }}#}
+{#                </a> : {{ pos_product.product.price }} руб./шт. * {{ pos_product.count }} шт. |#}
+{#                Скидка: {{ pos_product.discount }}%#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% extends 'base.html' %}
+
+{% block title_name %}
+Заказы
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
     <div class="row">
         <div class="col-3">
             {{ order.buyer_lastname }} {{ order.buyer_name }} {{ order.buyer_surname }}
@@ -30,6 +65,4 @@
         {% endfor %}
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}
