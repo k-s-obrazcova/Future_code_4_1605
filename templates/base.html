@@ -6,13 +6,11 @@
     <title>{% block title_name %}
 
     {% endblock %}</title>
-
     {% block link_bootstrap %}
         <link rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">
     {% endblock %}
-
     {% block link_additional %}
-    	
+
     {% endblock %}
 </head>
 <body class="container">
@@ -20,15 +18,13 @@
     {% block header %}
         {% include '_inc/_header.html' %}
     {% endblock %}
-
     <main>
         {% block content %}
 
         {% endblock %}
     </main>
-
     {% block footer %}
-        {%  include '_inc/_footer.html' %}
+        {% include '_inc/_footer.html' %}
     {% endblock %}
 {% endblock %}
 </body>
