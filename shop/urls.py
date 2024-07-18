@@ -16,4 +16,6 @@ urlpatterns = [
 
     path('order/<int:pk>/', OrderDetail.as_view(), name='order_detail'),
 
+    path('api/', test_json, name='api_test'),
+
 ]

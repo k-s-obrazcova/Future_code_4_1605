@@ -10,6 +10,12 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 
 from .utils import CalculateMoney
 
+from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import viewsets
+
 
 # Create your views here.
 
@@ -19,6 +25,7 @@ def list_product(request):
         'list_product': list_product
     }
     return render(request, 'shop/product/all_product.html', context)
+
 
 def product_list_with_filter(request):
     list_product = Product.objects.all()
@@ -41,7 +48,6 @@ def product_list_with_filter(request):
         return render(request, 'shop/product/all_filter_product.html', context)
 
 
-
 def get_one_product(request, id):
     product = get_object_or_404(Product, pk=id)
     context = {
@@ -51,12 +57,14 @@ def get_one_product(request, id):
     }
     return render(request, 'shop/product/one_product_table.html', context)
 
+
 def get_one_filter(request):
     find_product = Product.objects.filter(is_exists=request.GET.get('is_ex'))
     context = {
         'list_product': find_product
     }
     return render(request, 'shop/product/all_product.html', context)
+
 
 def get_more_filter(request):
     find_product = Product.objects.filter(
@@ -68,11 +76,13 @@ def get_more_filter(request):
     }
     return render(request, 'shop/product/all_product.html', context)
 
+
 class ListSupplier(ListView):
     model = Supplier
     template_name = 'shop/supplier/supplier_list.html'
     allow_empty = True
     paginate_by = 1
+
 
 class CreateSupplier(CreateView):
     model = Supplier
@@ -81,6 +91,7 @@ class CreateSupplier(CreateView):
     }
     template_name = 'shop/supplier/supplier_form.html'
     form_class = SupplierForm
+
 
 class DetailSupplier(DetailView):
     model = Supplier
@@ -101,9 +112,11 @@ class DeleteSupplier(DeleteView):
     template_name = 'shop/supplier/supplier_delete.html'
     success_url = reverse_lazy('supplier_list')
 
+
 class OrderDetail(DetailView, CalculateMoney):
     model = Order
     template_name = 'shop/order.html'
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         order = context.get('object')
@@ -112,3 +125,9 @@ class OrderDetail(DetailView, CalculateMoney):
         return context
 
 
+def test_json(request):
+    return JsonResponse({
+        'message': 'Данные в виде JSON',
+        'products': reverse_lazy('product_list_filter'),
+        'suppliers': reverse_lazy('supplier_list')
+    })
