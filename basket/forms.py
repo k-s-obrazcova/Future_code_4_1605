@@ -8,6 +8,7 @@ class BasketAddProductForm(forms.Form):
                                widget=forms.NumberInput(attrs={'class': 'form-control'}))
     reload = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
 
+
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order

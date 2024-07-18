@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from django.urls import reverse_lazy
 
+from basket.forms import BasketAddProductForm
 from .forms import ProductFilterForm, SupplierForm
 from .models import *
 
@@ -44,7 +45,9 @@ def product_list_with_filter(request):
 def get_one_product(request, id):
     product = get_object_or_404(Product, pk=id)
     context = {
-        'product': product
+        'product': product,
+        'form_basket': BasketAddProductForm
+
     }
     return render(request, 'shop/product/one_product_table.html', context)
 
@@ -107,3 +110,5 @@ class OrderDetail(DetailView, CalculateMoney):
         list_price = [pos_order.sum_pos_order() for pos_order in order.pos_order_set.all()]
         context['sum_price'] = self.sum_price(list_price)
         return context
+
+
