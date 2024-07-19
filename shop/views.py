@@ -8,6 +8,7 @@ from .models import *
 
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from .serializers import OrderSerializer, ProductSerializer, ProductSerializerSimple
 from .utils import CalculateMoney
 
 from django.http import JsonResponse
@@ -131,3 +132,50 @@ def test_json(request):
         'products': reverse_lazy('product_list_filter'),
         'suppliers': reverse_lazy('supplier_list')
     })
+
+
+@api_view(['GET', 'POST'])
+def order_api_list(request, format=None):
+    if request.method == 'GET':
+        order_list = Order.objects.all()
+        serializer = OrderSerializer(order_list, many=True)
+        return Response({'orders': serializer.data})
+    elif request.method == 'POST':
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def order_api_detail(request, pk, format=None):
+    order_obj = get_object_or_404(Order, pk=pk)
+    if order_obj:
+        if request.method == 'GET':
+            serializer = OrderSerializer(order_obj)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = OrderSerializer(order_obj, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'message': 'Данные успешно обновлены', 'order': serializer.data})
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            order_obj.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductViewSetDif(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ['create', 'update', 'partial_update']:
+            return ProductSerializer
+        return ProductSerializerSimple

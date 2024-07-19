@@ -1,6 +1,8 @@
 from .views import *
 from .views import *
 from django.urls import path, include
+from rest_framework import routers
+
 urlpatterns = [
     path('product/all/', list_product, name='product_list'),
     path('product/all-filter/', product_list_with_filter, name='product_list_filter'),
@@ -17,5 +19,11 @@ urlpatterns = [
     path('order/<int:pk>/', OrderDetail.as_view(), name='order_detail'),
 
     path('api/', test_json, name='api_test'),
-
+    path('api/orders/', order_api_list, name='api_order_list'),
+    path('api/orders/<int:pk>/', order_api_detail, name='api_order_detail'),
 ]
+
+router = routers.SimpleRouter()
+router.register('api/products', ProductViewSet, basename='product')
+router.register('api/product_simple', ProductViewSetDif, basename='product_simple')
+urlpatterns += router.urls
