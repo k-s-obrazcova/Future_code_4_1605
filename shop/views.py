@@ -8,11 +8,11 @@ from .models import *
 
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from .serializers import OrderSerializer, ProductSerializer, ProductSerializerSimple
+from .serializers import *
 from .utils import CalculateMoney
 
 from django.http import JsonResponse
-from rest_framework import status
+from rest_framework import status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
@@ -172,6 +172,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+
 class ProductViewSetDif(viewsets.ModelViewSet):
     queryset = Product.objects.all()
 
@@ -179,3 +180,47 @@ class ProductViewSetDif(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update']:
             return ProductSerializer
         return ProductSerializerSimple
+
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
+
+
+class SupplyViewSet(viewsets.ModelViewSet):
+    queryset = Supply.objects.all()
+    serializer_class = SupplySerializer
+
+
+class ParametrViewSet(viewsets.ModelViewSet):
+    queryset = Parametr.objects.all()
+    serializer_class = ParametrSerializer
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+class WarehouseViewSet(viewsets.ModelViewSet):
+    queryset = Warehouse.objects.all()
+    serializer_class = WarehouseSerializer
+
+
+class InventoryViewSet(viewsets.ModelViewSet):
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+
+class SupplierList(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.CreateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
