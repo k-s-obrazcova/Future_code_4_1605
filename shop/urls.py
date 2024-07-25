@@ -35,4 +35,5 @@ router.register('api/warehouse', WarehouseViewSet, basename='warehouse')
 router.register('api/inventory', InventoryViewSet, basename='inventory')
 router.register('api/review', ReviewViewSet, basename='review')
 router.register('api/supplier_simple', SupplierList, basename='supplier_simple')
+router.register('api/product_pagination', ProductPaginationViewSet, basename='product_pagination')
 urlpatterns += router.urls
