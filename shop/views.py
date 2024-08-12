@@ -10,6 +10,8 @@ from .models import *
 
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+import datetime
+
 from .serializers import *
 from .utils import CalculateMoney
 
@@ -255,3 +257,20 @@ class ProductPaginationViewSet(viewsets.ModelViewSet):
     pagination_class = PaginationPage
 
 
+def template_filter_django(request):
+    context = {
+        'digit': 84,
+        'stringText': "some text new test",
+        'bool': True,
+        'boolSecond': False,
+        'datetimeNow': datetime.datetime.now(),
+        'var1': 'Var',
+        'var2': '',
+        'var3': None,
+        'dict_col': [
+            {'name': 'Karina', 'price': 8900},
+            {'name': 'Alice', 'price': 19785},
+            {'name': 'Sam', 'price': 4000},
+        ]
+    }
+    return render(request, 'shop/test_filter_tags/filters.html', context=context)
