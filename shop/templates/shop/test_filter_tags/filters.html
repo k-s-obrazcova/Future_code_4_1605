@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load custom %}
+
 {% block title_name %}
     Пример фильтров в Django
 {% endblock %}
@@ -43,6 +45,10 @@
 
         <p><b>Ввод числа как размерность файла(filesizeformat): </b>{{ digit|add:"1974821"|filesizeformat }}</p>
 
+    <div>
+        {{ "hello world" | underscore }}
+        {{ "hello world" | reverse }}
+    </div>
 
     </div>
 {% endblock %}
